@@ -1,7 +1,7 @@
 use clap::{Parser, Subcommand};
 
 #[derive(Parser)]
-#[command(author,version, about, long_about = None)]
+#[command(version, about, long_about = None)]
 #[command(propagate_version = true)]
 struct Cli {
     #[command(subcommand)]
@@ -11,13 +11,14 @@ struct Cli {
 #[derive(Subcommand)]
 enum Commands {
    Init,
-   Create,
-   Commit,
-   Cat,
-   Delete,
+   Create{ branch: String },
+   Commit{ message: String },
+   Cat{ hash: String },
+   Delete{ branch: String },
    Log,
-   Revert
+   Revert{ branch_location: String, branch_level: String }
 }
+
 fn main() {
      let cli = Cli::parse();
 }
