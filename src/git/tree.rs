@@ -89,11 +89,29 @@ impl Tree {
 }
 
 impl InitTree {
-    pub fn is_valid_tree() {
-
+    pub fn check_valid_tree_entry(tree_init_content: &[&str]) -> bool {
+        tree_init_content.len() == 3 &&
+            (tree_init_content[0] == "blob " || tree_init_content[0] == "tree ")
     }
 
-    pub fn parse_tree() {
+
+    pub fn parse_tree(tree_init_content: &[&str]) -> InitTree {
+
+        if tree_init_content.len() == 3 {
+            return None;
+        }
+
+        let object = match tree_init_content[0] {
+            "blob" => GitObject::Blob,
+            _ => GitObject::Tree
+        };
+
         
+
+        InitTree {
+            name: tree_init_content[1].to_string(),
+            object,
+            hash: tree_init_content[2].to_string()
+        }
     }
 }
