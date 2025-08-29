@@ -1,3 +1,4 @@
+use super::types::GitObject;
 
 
 #[derive(Debug, PartialEq, Clone)]
