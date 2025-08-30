@@ -1,5 +1,5 @@
 
-
+use chorono::Utc;
 
 #[derive(Debug, PartialEq)]
 pub struct Commit {
@@ -12,11 +12,36 @@ pub struct Commit {
 }   
 
 impl Commit {
-    pub fn new() -> io::Result<Self> {
-        let mut new_content = String::new();
+    pub fn new(
+        message: &str,
+        repo_tree_hash: String,
+        pr_folder: String
+    ) -> io::Result<Self> {
+        let date_time: String = Utc::now().to_string();
+        let username: String = whoami::realname();
+        let parent: Option<yaml_layouts::Commit> = ConfigLayout::get_last_commit();
+        let commit_hash: String = root_repository_tree_hash;
 
-        for i in &new_content {
-
+         match parent {
+            Some(parent) => {
+                let parent: Option<String> = Some(parent.hash);
+                Ok(Commit {
+                    date_time,
+                    message: commit_message.to_string(),
+                    author: username,
+                    commit_hash,
+                    parent,
+                    parent_folder_name,
+                })
+            }
+            None => Ok(Commit {
+                date_time,
+                message: commit_message.to_string(),
+                author: username,
+                commit_hash,
+                parent: Option::None,
+                parent_folder_name,
+            }),
         }
     }
 
