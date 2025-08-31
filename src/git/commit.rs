@@ -46,6 +46,31 @@ impl Commit {
     }
 
     pub fn get_content(self) -> String {
+         let mut content: String = String::new();
+        let date_str: &String = &self.date_time.to_string();
+        content.push_str("tree ");
+        content.push_str(&self.commit_hash);
+        content.push('\n');
+        content.push_str("parent ");
+        match self.parent {
+            Some(parent_hash) => {
+                content.push_str(&parent_hash);
+                content.push('\n')
+            }
+            None => content.push('\n'),
+        }
+        content.push_str("author ");
+        content.push_str(&self.author);
+        content.push('\n');
+        content.push_str("date_time ");
+        content.push_str(&date_str);
+        content.push('\n');
+        content.push_str("message ");
+        content.push_str(&self.message);
+        content.push('\n');
+        content.push_str("root_dir ");
+        content.push_str(&self.parent_folder_name);
+        content
 
     }
 
